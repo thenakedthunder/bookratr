@@ -1,0 +1,43 @@
+﻿{% extends "layouts/main-layout.html" %}
+
+{% block title %}
+    WELCOME HERE!
+{% endblock %}
+
+{% block body %}
+<p class="h1 mt-4">bookratr Search</p>
+
+<p class="lead">Search for a book by ISBN, title and/or author</p>
+
+<form class="search-page" action="{{ url_for('search') }}" method="post">
+    <div class="input-group mb-3 mt-4">
+        <div class="input-group-prepend">
+            <span class="input-group-text fixed-width-input-group-text" id="basic-addon1">ISBN</span>
+        </div>
+        <input type="text" name="isbn" class="form-control" placeholder="Put here the ISBN number if you know it" aria-label="isbn" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text fixed-width-input-group-text">Title</span>
+        </div>
+        <input type="text" name="title" class="form-control" aria-label="title" placeholder="Search here by title">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text fixed-width-input-group-text">Author</span>
+        </div>
+        <input type="text" name="author" class="form-control" aria-label="autho" placeholder="Search here by author">
+    </div>
+
+    <button class="btn btn-light mt-2 width-240-px">Search</button>
+</form>
+
+{% if message %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endif %}
+
+{% endblock %}

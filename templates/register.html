@@ -1,0 +1,42 @@
+﻿{% extends "layouts/log-and-reg-layout.html" %}
+
+{% block title %}
+    WELCOME HERE!
+{% endblock %}
+
+{% block body %}
+
+<p class="lead">It's good you are here. Register here by giving a few details about yourself.</p>
+
+<form action="{{ url_for('register') }}" method="post">
+    <div class="input-group mb-3 mt-4">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+        </div>
+        <input type="text" name="username" class="form-control" placeholder="Please tell us a user name we can call you." aria-label="username" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">&#9919</span>
+        </div>
+        <input type="password" name="password" class="form-control" aria-label="password" placeholder="And the password you wish to use here is:">
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">&#9919</span>
+        </div>
+        <input type="password" name="password_again" class="form-control" aria-label="password" placeholder="Please write down that password again.">
+    </div>
+
+    <button class="btn btn-light">Register</button>
+</form>
+
+{% if message %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endif %}
+
+{% endblock %}

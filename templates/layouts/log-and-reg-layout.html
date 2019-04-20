@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='../../static/styles/styles.css') }}">
+</head>
+<body>
+    <div class="row">
+        <div class="col"></div>
+        <div col-md-auto class="login-center-column-width">
+            <h1 class="display-1 text-center pb-4 border-bottom-divide"><a href="{{ url_for('index') }}">bookratr</a></h1>
+            <p class="h1 mt-4 text-center">Welcome to bookratr!</p>
+
+            {% block body %}
+            {% endblock %}
+        </div>
+        <div class="col"></div>
+    </div>
+</body>
+</html>

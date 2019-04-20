@@ -1,0 +1,21 @@
+﻿{% extends "layouts/main-layout.html" %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block body %}
+<p class="lead mt-4">Here are the books that match the search criteria you have given.</p>
+
+<ul>
+    {% for book in books %}
+    <li class="bigger-link">
+        <!--Link building, output: "<author>: <title>"-->
+        {% set endpoint = book.author + ":" + book.title %}
+        <a class="bigger-link" href="{{ url_for('book', book_author_and_title = endpoint.replace(' ', '_')) }}">
+            {{ book.author }}: {{ book.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

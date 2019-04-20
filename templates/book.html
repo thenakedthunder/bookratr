@@ -1,0 +1,121 @@
+﻿{% extends "layouts/main-layout.html" %}
+
+{% block title %}
+    Book details
+{% endblock %}
+
+{% block body %}
+<p class="h1 mt-4">{{ book.title }}</p>
+
+<p class="lead mt-4">See what others thought of this book and leave your own rating and review.</p>
+
+<div id="book-data-table" class="mt-4 one-point-one-rem-text">
+    <div class="row ml-0">
+        <div class="data-title-fixed-width"><strong>Author</strong></div>
+        <div class="data-text-fixed-width">{{ book.author }}</div>
+    </div>
+    <div class="row ml-0">
+        <div class="data-title-fixed-width"><strong>Title</strong></div>
+        <div class="data-text-fixed-width">{{ book.title }}</div>
+    </div>
+    <div class="row ml-0">
+        <div class="data-title-fixed-width"><strong>Year</strong></div>
+        <div class="data-text-fixed-width">{{ book.year }}</div>
+    </div>
+    <div class="row ml-0">
+        <div class="data-title-fixed-width"><strong>ISBN</strong></div>
+        <div class="data-text-fixed-width">{{ book.isbn }}</div>
+    </div>
+    <div class="row ml-0">
+        <div class="data-title-fixed-width">
+            <strong>Bookratr rating</strong>
+        </div>
+        <div class="data-text-fixed-width">
+            {{ avg_rating }} (from {{ book.reviews|count }} rating(s))
+        </div>
+    </div>
+    <div class="row ml-0">
+        <div class="data-title-fixed-width">
+            <strong>Goodreads rating</strong>
+        </div>
+        <div class="data-text-fixed-width">
+            {{ goodreads_rating_data.average_rating }} (from {{ goodreads_rating_data.number_of_ratings }} rating(s))
+        </div>
+    </div>
+</div>
+
+<h3 class="mt-5">Reviews</h3>
+
+{% if (book.reviews is defined) and book.reviews %}
+    {% for review in book.reviews %}
+        <div class="card my-4 px-0 col-md-8 col-lg-6">
+            <div class="card-header">
+                {% for item in range (review.rating) %}
+                <img src="../static/styles/star-on-big.png" />
+                {% endfor %}
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{ review.review_text }}</p>
+                    <footer class="blockquote-footer"><strong>{{ review.user_name }}</strong> {{ review.time_of_review }} </footer>
+                </blockquote>
+            </div>
+        </div>
+
+    {% endfor %}
+        <h5 class="pt-5">Your review on this book</h5>
+
+    {% if user_review %}
+        <div class="card my-4 px-0 col-md-8 col-lg-6 border-primary">
+            <div class="card-header">
+                {% for item in range (user_review.rating) %}
+                <img src="../static/styles/star-on-big.png" />
+                {% endfor %}
+            </div>
+            <div class="card-body text-primary">
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{ user_review.review_text }}</p>
+                    <footer class="blockquote-footer"><strong>{{ user_review.user_name }}</strong> {{ user_review.time_of_review }} </footer>
+                </blockquote>
+            </div>
+        </div>
+
+    {% else %}
+        <p class="mt-4 col-md-8 col-lg-6 px-0">It seems you did not rate this book yet. If you want your rating to appear here, feel free to <strong>share your opinion with the community below.</strong></p>
+
+    {% endif %}
+
+
+{% else %}
+<p class="mt-4 font-weight-bold one-point-one-rem-text">There are no ratings of this book from our users. Be the first to give one!</p>
+{% endif %}
+
+{% if not user_review %}
+<form action="{{ url_for('rate', book_isbn=book.isbn) }}" method="post" class="mt-4 col-md-8 col-lg-6 px-0">
+    <div class="card">
+        <div class="card-header">
+            <span class="rating">
+                <input id="rating5" type="radio" name="rating" value="5">
+                <label for="rating5">5</label>
+                <input id="rating4" type="radio" name="rating" value="4" checked>
+                <label for="rating4">4</label>
+                <input id="rating3" type="radio" name="rating" value="3">
+                <label for="rating3">3</label>
+                <input id="rating2" type="radio" name="rating" value="2">
+                <label for="rating2">2</label>
+                <input id="rating1" type="radio" name="rating" value="1">
+                <label for="rating1">1</label>
+            </span>
+        </div>
+
+        <div class="card-body text-primary">
+            <textarea type="text" name="review-text" class="form-control" aria-label="title"
+                      placeholder="If you care, please share why you gave the rating above. (Optional)"></textarea>
+        </div>
+    </div>
+    <button class="btn btn-light mt-3">Post review</button>
+</form>
+{% endif %}
+
+
+{% endblock %}

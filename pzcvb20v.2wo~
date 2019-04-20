@@ -1,0 +1,29 @@
+import os
+
+from flask import Flask, session
+from flask_session import Session
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+app = Flask(__name__)
+
+# --- PIECE OF SHIT! ENV VAR SET, STILL IS TOO FUCKING STUPID TO GET ANYTHING! ---
+# Check for environment variable
+#if not os.getenv("DATABASE_URL"):
+#    raise RuntimeError("DATABASE_URL is not set")
+
+# Configure session to use filesystem
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# Set up database
+#engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(
+    "postgres://xyqysluuwdfaax:71339a55b4bbc525f2782917f139051a69c3917a8b242104c5c5d680234bc692@ec2-54-247-79-32.eu-west-1.compute.amazonaws.com:5432/d9q4urgqrkehjq")
+db = scoped_session(sessionmaker(bind=engine))
+
+
+@app.route("/")
+def index():
+    return "Project 1: TODO"
