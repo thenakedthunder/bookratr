@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<h3 class="mt-5">Reviews</h3>
+<h3 class="mt-5 pb-2">Reviews</h3>
 
 {% if (book.reviews is defined) and book.reviews %}
     {% for review in book.reviews %}
@@ -63,16 +63,16 @@
         </div>
 
     {% endfor %}
-        <h5 class="pt-5">Your review on this book</h5>
+        <h5 class="pt-5 pb-2">Your review on this book</h5>
 
     {% if user_review %}
         <div class="card my-4 px-0 col-md-8 col-lg-6 border-primary">
-            <div class="card-header">
+            <div class="card-header primary-color">
                 {% for item in range (user_review.rating) %}
                 <img src="../static/styles/star-on-big.png" />
                 {% endfor %}
             </div>
-            <div class="card-body text-primary">
+            <div class="card-body secondary-color">
                 <blockquote class="blockquote">
                     <p class="mb-0">{{ user_review.review_text }}</p>
                     <footer class="blockquote-footer"><strong>{{ user_review.user_name }}</strong> {{ user_review.time_of_review }} </footer>
@@ -81,13 +81,13 @@
         </div>
 
     {% else %}
-        <p class="mt-4 col-md-8 col-lg-6 px-0">It seems you did not rate this book yet. If you want your rating to appear here, feel free to <strong>share your opinion with the community below.</strong></p>
+        <p class="mt-3 col-md-8 col-lg-6 px-0">It seems you did not rate this book yet. If you want your rating to appear here, feel free to <strong>share your opinion with the community below.</strong></p>
 
     {% endif %}
 
 
 {% else %}
-<p class="mt-4 font-weight-bold one-point-one-rem-text">There are no ratings of this book from our users. Be the first to give one!</p>
+<p class="pt-4 pb-3 font-weight-bold one-point-one-rem-text">There are no ratings of this book from our users. Be the first to give one!</p>
 {% endif %}
 
 {% if not user_review %}
@@ -113,7 +113,7 @@
                       placeholder="If you care, please share why you gave the rating above. (Optional)"></textarea>
         </div>
     </div>
-    <button class="btn btn-light mt-3">Post review</button>
+    <button class="btn mt-4">Post review</button>
 </form>
 {% endif %}
 
