@@ -72,7 +72,7 @@ class Book:
                               "author": '%' + author.upper() + '%'}).fetchall()
         
         if len(results) == 0:
-            return "No book found"
+            return "No book found. Please try the search over with different search criteria."
 
         return results
 

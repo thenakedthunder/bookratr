@@ -9,7 +9,7 @@
 
 <p class="lead">Search for a book by ISBN, title and/or author</p>
 
-<form class="search-page" action="{{ url_for('search') }}" method="post">
+<form class="search-page mb-5" action="{{ url_for('search') }}" method="post">
     <div class="input-group mb-3 mt-4">
         <div class="input-group-prepend">
             <span class="input-group-text fixed-width-input-group-text" id="basic-addon1">ISBN</span>
@@ -32,12 +32,12 @@
     </div>
 
     <button class="btn btn-light mt-2 width-240-px">Search</button>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
 </form>
 
-{% if message %}
-<div class="alert alert-danger" role="alert">
-    {{ message }}
-</div>
-{% endif %}
 
 {% endblock %}
