@@ -8,6 +8,7 @@ API_data_provider = api_data_provider.API_data_provider
 from data_access import book, review
 Book, Review = book.Book, review.Review
 
+
 # returns a JSON response containing the book’s title, author, 
 # publication date, ISBN number, review count, and average score
 class Bookratr_API_data_provider(API_data_provider):

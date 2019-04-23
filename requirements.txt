@@ -2,3 +2,12 @@ Flask
 Flask-Session
 psycopg2
 SQLAlchemy
+SQLAlchemy ORM
+sqlalchemy.sql.functions
+os
+csv
+datetime
+werkzeug.security
+abc
+json
+requests
