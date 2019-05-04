@@ -7,7 +7,8 @@ from flask_session import Session
 from data_access import book, user, review
 Book, User, Review = book.Book, user.User, review.Review
 
-from APIs import goodreads_API_data_provider, bookratr_API_data_provider
+from APIs import api_data_provider, goodreads_API_data_provider, bookratr_API_data_provider
+API_data_provider = api_data_provider.API_data_provider
 Goodreads_API_data_provider = goodreads_API_data_provider.Goodreads_API_data_provider
 Bookratr_API_data_provider = bookratr_API_data_provider.Bookratr_API_data_provider
 
@@ -32,7 +33,7 @@ Session(app)
 
 # Rendering the search page if user is logged in
 @app.route("/")
-def index():
+def __index():
     if "username" in session:
         return render_template("search.html")
 
@@ -42,7 +43,7 @@ def index():
 
 # Login logic
 @app.route("/login", methods=["POST"])
-def login():
+def __login():
     # Getting user input
     user = User(request.form.get("username"))
     password = request.form.get("password")
@@ -55,11 +56,11 @@ def login():
 
     # Logging in
     session["username"] = user.username
-    return redirect(url_for("index"))
+    return redirect(url_for("__index"))
 
 
 @app.route("/register", methods=["GET", "POST"])
-def register():
+def __register():
     if request.method == "GET":
         # tell the user that registration should not be 
         # possible if a user is logged in
@@ -83,17 +84,17 @@ def register():
         return render_template("register.html", 
                                message=input_validation_error_message)
 
-    return redirect(url_for("index"))
+    return redirect(url_for("__index"))
 
 @app.route("/logout")
-def logout():
+def __logout():
     # remove the username from the session
    session.pop("username", None)
 
-   return redirect(url_for("index"))
+   return redirect(url_for("__index"))
 
 @app.route("/search", methods=["POST"])
-def search():
+def __search():
     # "handling in" the search form
     isbn = request.form.get("isbn")
     title = request.form.get("title")
@@ -111,7 +112,7 @@ def search():
 
 @app.route("/books/<book_author_and_title>")
 # Find book and its reviews in db and show these details
-def book(book_author_and_title):
+def __book(book_author_and_title):
     book_to_show = Book.search_from_string_composed_by(book_author_and_title)
     reviews = Review.get_reviews(book_to_show['isbn'])
     book = Book(book_to_show, reviews)
@@ -127,9 +128,9 @@ def book(book_author_and_title):
 
 
 @app.route("/rate/<book_isbn>", methods=["POST"])
-def rate(book_isbn):
-    # Getting rating input (Rating is 4 by default - this one 
-    # is checked at loading, while the review text is optional)
+def __rate(book_isbn):
+    # Getting rating input (Rating is 4 by default, 
+    # while the review text is optional)
     rating = request.form.get("rating"), 
     review_text = request.form.get("review-text")
     review = Review(rating, review_text)
@@ -139,12 +140,15 @@ def rate(book_isbn):
     
     review.save_to_database(book_isbn, session["username"])
     return redirect(url_for(
-        "book", book_author_and_title = book_author_and_title))
+        "__book", book_author_and_title = book_author_and_title))
 
 @app.route("/api/<isbn>")
 # returns a JSON response containing the book’s title, author, 
 # publication date, ISBN number, review count, and average score
-def provide_book_data(isbn):
+def __provide_book_data(isbn):
     api_data_provider = Bookratr_API_data_provider()
+    if not isinstance(api_data_provider, API_data_provider):
+        raise TypeError("A provider that implements the " + 
+                        "API_data_provider must be used")
 
     return api_data_provider.get_API_Data_json(isbn)

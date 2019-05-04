@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 # ---SETTING UP DATABASE------------------------------------------------------
 
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -20,6 +19,8 @@ class User:
 
     # ---METHOD DEFINITIONS---------------------------------------------------
 
+    #region Public methods
+
     def check_login_data(self, password):
         # searching for username in db, checking if it is there
         user_data = db.execute("SELECT * FROM users WHERE user_name = :un", 
@@ -33,24 +34,26 @@ class User:
         # if all data checks out, return no error message
         return None
 
-
     def register(self, password, password2):
         # checking registration input data
-        error_in_reg_validation_message = self.validate_reg_input(
+        error_in_reg_validation_message = self.__validate_reg_input(
                                                password, password2)
         if error_in_reg_validation_message:
             return error_in_reg_validation_message
 
-        if self.is_username_duplicate_in(db):
+        if self.__is_username_duplicate_in(db):
             return "Sorry, this username is already taken:( Please choose another one."
 
         # if everything was OK, save the registration data
         # into the database and return no error message
-        self.save_user_data_in_database(password, password2)
+        self.__save_user_data_in_database(password, password2)
         return None
 
+    #endregion
 
-    def validate_reg_input(self, password, password2):
+    #region Private implementation
+
+    def __validate_reg_input(self, password, password2):
         # this can happen since the user object was initialized
         # with the username input of the registration form
         if self.username == "":
@@ -69,7 +72,7 @@ class User:
         return None
 
 
-    def is_username_duplicate_in(self, db):
+    def __is_username_duplicate_in(self, db):
         if db.execute("SELECT * FROM users WHERE user_name = :un", 
                       {"un": self.username}).rowcount == 0:
             return False
@@ -77,7 +80,7 @@ class User:
         return True
 
 
-    def save_user_data_in_database(self, password, password2):
+    def __save_user_data_in_database(self, password, password2):
         # Encrypting password
         pw = generate_password_hash(password)
 
@@ -86,3 +89,5 @@ class User:
                    "VALUES (:username, :password)",
                   {"username": self.username, "password": pw})
         db.commit()
+
+        #endregion

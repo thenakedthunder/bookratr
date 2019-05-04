@@ -18,7 +18,7 @@ class Utility:
 
     @staticmethod
     # helper method to use the api_data_provider protocol and
-    # convert the json data it returns to a dictionary
+    # convert the json data it returns into a dictionary
     def get_rating_data_dict(api_data_provider, book):
         if not isinstance(api_data_provider, API_data_provider):
             raise TypeError("A provider that implements the " + 

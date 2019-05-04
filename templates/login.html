@@ -7,7 +7,7 @@
 {% block body %}
 <p class="lead text-center">First, we will need you to log in.</p>
 
-<form class="border-bottom-divide pb-3" action="{{ url_for('login') }}" method="post">
+<form class="border-bottom-divide pb-3" action="{{ url_for('__login') }}" method="post">
     <div class="input-group mb-3 mt-4">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1">@</span>
@@ -32,6 +32,6 @@
 </form>
 
 <p class="text-center">Don't have an account yet?</p>
-<a href="{{ url_for('register') }}" class="btn btn-light btn-block mb-5">Register</a>
+<a href="{{ url_for('__register') }}" class="btn btn-light btn-block mb-5">Register</a>
 
 {% endblock %}

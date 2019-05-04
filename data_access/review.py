@@ -44,9 +44,10 @@ class Review:
     def get_reviews(isbn):
         reviews = db.execute("SELECT user_name, " + 
                              "to_char(time_of_review, :time_expression) " + 
-                             "AS time_of_review, rating, review_text " + 
+                             "AS review_time, rating, review_text " + 
                              "FROM reviews " +
-                             "WHERE book_isbn = :isbn",
+                             "WHERE book_isbn = :isbn " + 
+                             "ORDER BY time_of_review DESC",
                              {"time_expression": 'Month DD, YYYY',
                               "isbn": isbn}).fetchall()
 

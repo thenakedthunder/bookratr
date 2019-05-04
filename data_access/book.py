@@ -50,10 +50,11 @@ class Book:
         # fetching a collection of ratings from the reviews collection
         ratings = [review['rating'] for review in self.reviews]
 
-        return sum(ratings) / len(ratings)
+        result = sum(ratings) / len(ratings)
+        return round(result, 2)
 
 
-    # ---STATIC METHODS-------------------------------------------------------
+    # region Static Methods
 
     # Searches for a book by data given by user in the search form
     @staticmethod
@@ -132,6 +133,8 @@ class Book:
                              "more than one result.")
 
         return results[0]
+
+    # endregion
   
 
 

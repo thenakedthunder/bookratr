@@ -23,7 +23,7 @@ class Bookratr_API_data_provider(API_data_provider):
         reviews = Review.get_reviews(result_of_search['isbn'])
         book = Book(result_of_search, reviews)
         
-        data = dict(title=book.title, author=book.author, year=book.year,
+        data = dict(title=book.title, author=book.author, year=int(book.year),
                     isbn=book.isbn)
         data['review_count'] = len(reviews)
         data['average_score'] = book.get_average_score()

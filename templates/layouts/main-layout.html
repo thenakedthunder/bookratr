@@ -11,12 +11,12 @@
 
             <ul class="nav nav-fill">
                 <li>
-                    <h1 class="display-1 search-page"><a href="{{ url_for('index') }}">bookratr</a></h1>
+                    <h1 class="display-1 search-page"><a href="{{ url_for('__index') }}">bookratr</a></h1>
                 </li>
                 {% if session["username"] %}
 
                 <li class="nav-item logged-in-user-text">
-                    Logged in as {{ session["username"] }}. <a href="{{ url_for('logout') }}">Log out</a>
+                    Logged in as {{ session["username"] }}. <a href="{{ url_for('__logout') }}">Log out</a>
                 </li>
 
                 {% endif %}

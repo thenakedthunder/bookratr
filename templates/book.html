@@ -31,7 +31,7 @@
             <strong>Bookratr rating</strong>
         </div>
         <div class="data-text-fixed-width">
-            {{ avg_rating }} (from {{ book.reviews|count }} rating(s))
+            {{ avg_rating }}/5 (from {{ book.reviews|count }} rating(s))
         </div>
     </div>
     <div class="row ml-0">
@@ -39,7 +39,7 @@
             <strong>Goodreads rating</strong>
         </div>
         <div class="data-text-fixed-width">
-            {{ goodreads_rating_data.average_rating }} (from {{ goodreads_rating_data.number_of_ratings }} rating(s))
+            {{ goodreads_rating_data.average_rating }}/5 (from {{ goodreads_rating_data.number_of_ratings }} rating(s))
         </div>
     </div>
 </div>
@@ -47,35 +47,44 @@
 <h3 class="mt-5 pb-2">Reviews</h3>
 
 {% if (book.reviews is defined) and book.reviews %}
+<div class="col-md-8 col-lg-6 px-0">
     {% for review in book.reviews %}
-        <div class="card my-4 px-0 col-md-8 col-lg-6">
+        <div class="card my-4 px-0">
             <div class="card-header">
                 {% for item in range (review.rating) %}
                 <img src="../static/styles/star-on-big.png" />
+                <!-- This picture, and the HTML and CSS code to display stars instead of radio buttons, I found on the internet. 
+                    Unfortunately, at the time of downloading, I did not write the source of it down, and later I could not 
+                    find it :( -->
                 {% endfor %}
             </div>
             <div class="card-body">
                 <blockquote class="blockquote">
                     <p class="mb-0">{{ review.review_text }}</p>
-                    <footer class="blockquote-footer"><strong>{{ review.user_name }}</strong> {{ review.time_of_review }} </footer>
+                    <footer class="blockquote-footer"><strong>{{ review.user_name }}</strong> {{ review.review_time }} </footer>
                 </blockquote>
             </div>
         </div>
 
     {% endfor %}
-        <h5 class="pt-5 pb-2">Your review on this book</h5>
+        <hr class="my-5"/>
+    </div>
+        <h5 class="pb-2">Your review on this book</h5>
 
     {% if user_review %}
         <div class="card my-4 px-0 col-md-8 col-lg-6 border-primary">
             <div class="card-header primary-color">
                 {% for item in range (user_review.rating) %}
                 <img src="../static/styles/star-on-big.png" />
+                <!-- This picture, and the HTML and CSS code to display stars instead of radio buttons, I found on the internet.
+                    Unfortunately, at the time of downloading, I did not write the source of it down, and later I could not
+                    find it :( -->
                 {% endfor %}
             </div>
             <div class="card-body secondary-color">
                 <blockquote class="blockquote">
                     <p class="mb-0">{{ user_review.review_text }}</p>
-                    <footer class="blockquote-footer"><strong>{{ user_review.user_name }}</strong> {{ user_review.time_of_review }} </footer>
+                    <footer class="blockquote-footer"><strong>{{ user_review.user_name }}</strong> {{ user_review.review_time }} </footer>
                 </blockquote>
             </div>
         </div>
@@ -91,7 +100,7 @@
 {% endif %}
 
 {% if not user_review %}
-<form action="{{ url_for('rate', book_isbn=book.isbn) }}" method="post" class="mt-4 col-md-8 col-lg-6 px-0">
+<form action="{{ url_for('__rate', book_isbn=book.isbn) }}" method="post" class="mt-4 col-md-8 col-lg-6 px-0">
     <div class="card">
         <div class="card-header">
             <span class="rating">
@@ -106,6 +115,10 @@
                 <input id="rating1" type="radio" name="rating" value="1">
                 <label for="rating1">1</label>
             </span>
+            <!-- The HTML and CSS code to display stars instead of radio buttons, as well as the images of the stars, 
+                I found on the internet. Unfortunately, at the time of downloading, I did not write the source of it 
+                down, and later I could not find it :( -->
+
         </div>
 
         <div class="card-body text-primary">
