@@ -1,13 +1,7 @@
-Flask
+Flask==0.12.4
 Flask-Session
 psycopg2
 SQLAlchemy
-SQLAlchemy ORM
-sqlalchemy.sql.functions
-os
-csv
 datetime
-werkzeug.security
-abc
-json
+Werkzeug<0.13.0,>=0.12.0
 requests
