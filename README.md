@@ -14,6 +14,10 @@ I also uploaded too images with the class diagram, if you like the visual presen
 is an "overwhelming" version showing all the dependencies, the other is purer and therefore easier 
 to comprehend.
 
+I intentionally omitted the use of JavaScript because of said requirements. I know that the use of
+it could have made the whole site and code better. For checking on my JS skills, please take a look
+at other projects on this repo.
+
 The whole code here is my own work, the only assistance I got was from virtual "partners" like 
 Google and Stack Overflow. The only code parts I did NOT write were for the part where users can 
 rate the books: here, the html and css code for displaying golden stars instead of radio buttons is
